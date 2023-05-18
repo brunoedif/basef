@@ -12,12 +12,9 @@ export const AdminProvider = ({ children }) => {
   const [userNotification, setUserNotification] = useState([]);
 
   function setNotification(objeto) {
-    
     if (objeto) {
-      console.warn(objeto);
       setUserNotification(objeto);
     }
-    
   }
 
   return (

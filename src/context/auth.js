@@ -9,12 +9,13 @@ function AuthProvider({ children }) {
   const [showMap, setShowMap] = useState(false);
   const [coordinates, setCoords] = useState({ lat: null, lon: null });
   const [user, setUser] = useState(null);
-  const { getAccount, logout } = useServer();
+  const { getAccount, logout, getMedia } = useServer();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const sessionActive = await getAccount();
+
         if (sessionActive) {
           setIsSignedIn(true);
           setUser(sessionActive);

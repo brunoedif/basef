@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Home.module.sass";
 import Card from "@/components/Card";
 
@@ -15,13 +15,13 @@ import useHandleConfig from "@/hooks/useConfig";
 import useHandleNotification from "@/hooks/useNotification";
 import useHandleService from "@/hooks/useService";
 import { toName } from "@/libs/utils";
-
 export default function index() {
   const dispatch = useDispatch();
   const maps = useSelector((state) => state.location.maps);
   const { config } = useHandleConfig();
   const { notification } = useHandleNotification();
   const { order, user } = useHandleService();
+  const [location, setLocation] = useState(false);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -29,7 +29,7 @@ export default function index() {
 
         const latitude = position?.coords?.latitude;
         const longitude = position?.coords?.longitude;
-
+        setLocation(true);
         dispatch(
           setMaps({
             lat: latitude,
@@ -39,13 +39,21 @@ export default function index() {
         );
       });
     }
-  }, []);
+  }, [!location]);
 
   return (
     <>
       <div className={styles.home}>
         <Map maps={maps} />
-        <Card name={user && user?.name && toName(user?.name)} />
+        <Card
+          notification={notification}
+          badge={notification?.length}
+          location={location}
+          avatar={
+            user && user?.prefs && user?.prefs?.avatar && user?.prefs?.avatar
+          }
+          name={user && user?.name && toName(user?.name)}
+        />
       </div>
     </>
   );

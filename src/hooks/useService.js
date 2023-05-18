@@ -19,14 +19,11 @@ export default function useHandleService() {
       }
 
       if (response) {
-        console.warn(response);
       }
     });
   };
 
   const fetchData = (id) => {
-    console.warn(id);
-
     getMyService(id, (error, response) => {
       if (error) {
         console.error("Error:", error);

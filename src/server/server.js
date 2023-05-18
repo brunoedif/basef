@@ -266,7 +266,18 @@ const ServerProvider = ({ children }) => {
     const response = avatars.getInitials();
     return response;
   };
-
+  const getMedia = (id) => {
+    const promise = databases.getDocument("freteme", "media", id);
+    promise.then(
+      function (response) {
+        console.warn(response); // Success
+      },
+      function (error) {
+        console.error(error); // Failure
+      }
+    );
+    return promise;
+  };
   const updateAccount = async (data) => {
     if (data) {
       if (data.name) {
@@ -378,6 +389,7 @@ const ServerProvider = ({ children }) => {
         acceptService,
         updatePhone,
         updatePassword,
+        getMedia,
       }}
     >
       {children}

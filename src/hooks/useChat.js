@@ -48,7 +48,6 @@ export default function handleMessages() {
       if (error) {
         console.error("Erro ao enviar a mensagem:", error);
       } else {
-        console.warn("Mensagem enviada com sucesso:", response);
       }
     });
   };
